@@ -13,19 +13,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const config_1 = require("./config");
 const database_1 = require("./database");
+const config_1 = require("./config");
 const router_1 = require("./router");
-const server = (0, express_1.default)();
-function main() {
-    return __awaiter(this, void 0, void 0, function* () {
-        yield (0, database_1.connectMongoDB)();
-        const server = (0, express_1.default)();
-        server.use(express_1.default.json());
-        (0, router_1.routes)(server);
-        server.listen(config_1.PORT, () => {
-            console.log("server running on part 3000");
-        });
+const main = () => __awaiter(void 0, void 0, void 0, function* () {
+    yield (0, database_1.connectToMongodb)();
+    const server = (0, express_1.default)();
+    server.use(express_1.default.json());
+    (0, router_1.router)(server);
+    //Start server
+    server.listen(config_1.PORT, () => {
+        console.log('The application is listening on port ' + config_1.PORT);
     });
-}
+});
 main();

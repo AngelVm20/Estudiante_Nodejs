@@ -9,26 +9,24 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.connectMongoDB = void 0;
+exports.connectToMongodb = void 0;
 const mongoose_1 = require("mongoose");
 const config_1 = require("./config");
-function connectMongoDB() {
-    return __awaiter(this, void 0, void 0, function* () {
-        try {
-            yield (0, mongoose_1.connect)(config_1.MONGO_URI);
-        }
-        catch (error) {
-            console.error(error);
-        }
-    });
-}
-exports.connectMongoDB = connectMongoDB;
+const connectToMongodb = () => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        yield (0, mongoose_1.connect)(config_1.MONGO_URI);
+    }
+    catch (error) {
+        console.log("Error:", error);
+    }
+});
+exports.connectToMongodb = connectToMongodb;
 mongoose_1.connection.on("connected", () => {
-    console.log("DB iniciada", mongoose_1.connection.db.databaseName);
+    console.log("Mongodb connected to:", mongoose_1.connection.db.databaseName);
 });
-mongoose_1.connection.on("error", (e) => {
-    console.error("error", e);
+mongoose_1.connection.on("error", (error) => {
+    console.error("error", error);
 });
-mongoose_1.connection.on("disconnect", () => {
-    console.log("Mongo(BD) esta desconectado");
+mongoose_1.connection.on("disconnected", () => {
+    console.log("Mongodb disconnected");
 });
